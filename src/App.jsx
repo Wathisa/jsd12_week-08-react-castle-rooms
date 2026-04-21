@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import Castle from "./components/01_Castle";
 
 export default function App() {
   // creating state variables
   const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+
   const handleQuestion = (event) => {
     setQuestion(event.target.value);
+  };
+
+  const handleAnswer = (event) => {
+    setAnswer(event.target.value);
   };
 
   return (
@@ -14,6 +20,7 @@ export default function App() {
         Message for JSD12:
         <span className="text-yellow-300">
           {/* {question or waiting for message} */}
+          {answer ? answer : "Waiting for a reply..."}
         </span>
       </p>
       <textarea
@@ -23,12 +30,12 @@ export default function App() {
         placeholder="Type your message here..."
       />
       <p className="text-green-300">
-        Reply from secret room:
+        Reply from secret room: {""}
         <span className="text-yellow-300">
           {/* {answer or waiting for reply} */}
         </span>
       </p>
-      <Castle question={question} />
+      <Castle question={question} answer={answer} handleAnswer={handleAnswer} />
     </div>
   );
 }
