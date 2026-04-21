@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Castle from "./components/castle";
+import Castle from "./components/01_Castle";
 
 export default function App() {
   // creating state variables

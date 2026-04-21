@@ -1,4 +1,4 @@
-import Tower from "./Tower";
+import Tower from "./02_Tower";
 
 export default function Castle({ question }) {
   return (
