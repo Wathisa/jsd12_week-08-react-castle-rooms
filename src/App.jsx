@@ -28,7 +28,7 @@ export default function App() {
           {/* {answer or waiting for reply} */}
         </span>
       </p>
-      {<Castle />}
+      <Castle question={question} />
     </div>
   );
 }
