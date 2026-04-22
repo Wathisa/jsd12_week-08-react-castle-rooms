@@ -1,5 +1,6 @@
 import { use, useState } from "react";
 import Castle from "./components/01_Castle";
+import SimpleAsyncAwait from "./examples/async/SimpleAsyncAwait";
 
 export default function App() {
   // creating state variables
@@ -36,6 +37,7 @@ export default function App() {
         </span>
       </p>
       <Castle question={question} answer={answer} handleAnswer={handleAnswer} />
+      <SimpleAsyncAwait />
     </div>
   );
 }
