@@ -1,50 +1,98 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Castle from "./components/01_Castle";
 // import SimpleAsyncAwait from "./examples/async/SimpleAsyncAwait";
 
 export default function App() {
-  // creating state variables
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [view, setView] = useState("outside");
+  const [message, setMessage] = useState("");
+  const [emotion, setEmotion] = useState("");
+  const [step, setStep] = useState("idle");
 
-  const handleQuestion = (event) => {
-    setQuestion(event.target.value);
-  };
+  useEffect(() => {
+    const text = message.trim().toLowerCase();
 
-  const handleAnswer = (event) => {
-    if (typeof event === "string") {
-      setAnswer(event);
+    if (!text) {
+      setEmotion("");
+      setStep("idle");
       return;
     }
 
-    setAnswer(event.target.value);
+    if (text.includes("เหนื่อย") || text.includes("tired")) {
+      setEmotion("tired");
+      setStep("support");
+      return;
+    }
+
+    if (text.includes("เศร้า") || text.includes("sad")) {
+      setEmotion("sad");
+      setStep("support");
+      return;
+    }
+
+    if (text.includes("เครียด") || text.includes("stress")) {
+      setEmotion("stress");
+      setStep("support");
+      return;
+    }
+
+    if (text.includes("ดีใจ") || text.includes("happy")) {
+      setEmotion("happy");
+      setStep("support");
+      return;
+    }
+
+    setEmotion("");
+    setStep("idle");
+  }, [message]);
+
+  const openDoor = () => {
+    setView("inside");
+  };
+
+  const handleMessage = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const handleBetter = () => {
+    setStep("better");
+  };
+
+  const handleReset = () => {
+    setView("outside");
+    setMessage("");
+    setEmotion("");
+    setStep("idle");
   };
 
   return (
-    <div className="pb-80 py-10 gap-y-4 flex flex-col justify-center items-center min-h-screen bg-gray-800 text-white">
-      <p className="text-purple-300">
-        Message for the Secret Room:
-      </p>
-      <textarea
-        value={question}
-        onChange={handleQuestion}
-        className="bg-white text-black rounded px-2 py-1 "
-        placeholder="Type your message here..."
-      />
-      <p className="text-yellow-300">
-        {question ? question : "Waiting for a message..."}
-      </p>
-      <p className="text-green-300">
-        Reply from the Secret Room:
-        <span className="text-yellow-300">
-          {/* {question or waiting for message} */}
-          {" "}
-        </span>
-      </p>
-      <p className="text-yellow-300">
-        {answer ? answer : "Waiting for a reply..."}
-      </p>
-      <Castle question={question} answer={answer} handleAnswer={handleAnswer} />
+    <div
+      className={`flex min-h-screen items-center justify-center px-6 py-10 text-white ${
+        step === "better" ? "bg-slate-600" : "bg-gray-800"
+      }`}
+    >
+      {view === "outside" ? (
+        <div className="flex max-w-md flex-col items-center gap-6 text-center">
+          <p className="text-2xl text-purple-200">
+            Hey... you can come inside and talk with me.
+          </p>
+          <button
+            type="button"
+            onClick={openDoor}
+            className="rounded bg-yellow-300 px-5 py-3 text-black"
+          >
+            Open the Door
+          </button>
+        </div>
+      ) : (
+        <Castle
+          message={message}
+          emotion={emotion}
+          step={step}
+          handleMessage={handleMessage}
+          handleBetter={handleBetter}
+          handleReset={handleReset}
+        />
+      )}
       {/* <SimpleAsyncAwait /> */}
     </div>
   );

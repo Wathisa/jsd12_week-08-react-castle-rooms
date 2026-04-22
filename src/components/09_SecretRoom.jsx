@@ -1,64 +1,11 @@
-import { useEffect, useState } from "react";
-
-export default function SecretRoom({ question, answer, handleAnswer }) {
-  const [message, setMessage] = useState(answer || "");
-  const [emotion, setEmotion] = useState("");
-  const [step, setStep] = useState("idle");
-
-  useEffect(() => {
-    const text = message.trim().toLowerCase();
-
-    if (!text) {
-      setEmotion("");
-      setStep("idle");
-      return;
-    }
-
-    if (text.includes("เหนื่อย") || text.includes("tired")) {
-      setEmotion("tired");
-      setStep("support");
-      return;
-    }
-
-    if (text.includes("เศร้า") || text.includes("sad")) {
-      setEmotion("sad");
-      setStep("support");
-      return;
-    }
-
-    if (text.includes("เครียด") || text.includes("stress")) {
-      setEmotion("stress");
-      setStep("support");
-      return;
-    }
-
-    if (text.includes("ดีใจ") || text.includes("happy")) {
-      setEmotion("happy");
-      setStep("support");
-      return;
-    }
-
-    setEmotion("");
-    setStep("idle");
-  }, [message]);
-
-  const handleMessageChange = (event) => {
-    const nextMessage = event.target.value;
-    setMessage(nextMessage);
-    handleAnswer(nextMessage);
-  };
-
-  const handleBetter = () => {
-    setStep("better");
-  };
-
-  const handleReset = () => {
-    setMessage("");
-    setEmotion("");
-    setStep("idle");
-    handleAnswer("");
-  };
-
+export default function SecretRoom({
+  message,
+  emotion,
+  step,
+  handleMessage,
+  handleBetter,
+  handleReset,
+}) {
   let supportContent = null;
 
   if (emotion === "tired") {
@@ -90,22 +37,16 @@ export default function SecretRoom({ question, answer, handleAnswer }) {
       }`}
     >
       <h1>SecretRoom</h1>
-      <p className="text-purple-300">Message from the outside:</p>
-      <p className="text-yellow-300">
-        {question ? question : "Waiting for a message..."}
-      </p>
-      <p className="text-green-300">Reply to the outside:</p>
-      <textarea
-        value={message}
-        onChange={handleMessageChange}
-        className="bg-white text-black rounded px-2 py-1 "
-        placeholder="Type your reply here..."
-      />
-
       {step === "idle" ? (
-        <p className="text-yellow-300">
-          {message ? message : "Waiting for a message..."}
-        </p>
+        <>
+          <p className="text-purple-300">How are you feeling today?</p>
+          <textarea
+            value={message}
+            onChange={handleMessage}
+            className="mt-4 bg-white text-black rounded px-2 py-1 "
+            placeholder="Type your message here..."
+          />
+        </>
       ) : null}
 
       {step === "support" && supportContent ? (
