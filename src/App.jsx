@@ -12,6 +12,11 @@ export default function App() {
   };
 
   const handleAnswer = (event) => {
+    if (typeof event === "string") {
+      setAnswer(event);
+      return;
+    }
+
     setAnswer(event.target.value);
   };
 
