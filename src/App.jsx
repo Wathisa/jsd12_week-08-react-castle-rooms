@@ -1,25 +1,14 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { MessageContext } from "./contexts/messageContext/MessageContext";
 import Castle from "./components/01_Castle";
 // import SimpleAsyncAwait from "./examples/async/SimpleAsyncAwait";
 
 export default function App() {
-  // creating state variables
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-
-  const handleQuestion = (event) => {
-    setQuestion(event.target.value);
-  };
-
-  const handleAnswer = (event) => {
-    setAnswer(event.target.value);
-  };
+  const { question, handleQuestion, answer } = useContext(MessageContext);
 
   return (
     <div className="pb-80 py-10 gap-y-4 flex flex-col justify-center items-center min-h-screen bg-gray-800 text-white">
-      <p className="text-purple-300">
-        Message for the Secret Room:
-      </p>
+      <p className="text-purple-300">Message for the Secret Room:</p>
       <textarea
         value={question}
         onChange={handleQuestion}
@@ -32,14 +21,13 @@ export default function App() {
       <p className="text-green-300">
         Reply from the Secret Room:
         <span className="text-yellow-300">
-          {/* {question or waiting for message} */}
-          {" "}
+          {/* {question or waiting for message} */}{" "}
         </span>
       </p>
       <p className="text-yellow-300">
         {answer ? answer : "Waiting for a reply..."}
       </p>
-      <Castle question={question} answer={answer} handleAnswer={handleAnswer} />
+      <Castle />
       {/* <SimpleAsyncAwait /> */}
     </div>
   );
