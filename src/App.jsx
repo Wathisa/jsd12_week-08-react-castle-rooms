@@ -1,34 +1,35 @@
-import { useContext } from "react";
-import { MessageContext } from "./contexts/messageContext/MessageContext";
-import Castle from "./components/01_Castle";
-// import SimpleAsyncAwait from "./examples/async/SimpleAsyncAwait";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import MoodTracker from "./components/MoodTracker";
+import TodoList from "./components/TodoList";
+import LightSwitch from "./components/LightSwitch";
+import MessageBox from "./components/MessageBox";
+import CastleRooms from "./components/CastleRooms";
+
+const pageComponents = {
+  Home,
+  "Mood Tracker": MoodTracker,
+  "Todo List": TodoList,
+  "Light Switch": LightSwitch,
+  "Message Box": MessageBox,
+  "Castle Rooms": CastleRooms,
+};
 
 export default function App() {
-  const { question, handleQuestion, answer } = useContext(MessageContext);
+  // currentPage ควบคุมว่าจะให้หน้าไหนแสดงบนจอ
+  const [currentPage, setCurrentPage] = useState("Home");
+
+  const CurrentPageComponent = pageComponents[currentPage];
 
   return (
-    <div className="pb-80 py-10 gap-y-4 flex flex-col justify-center items-center min-h-screen bg-gray-800 text-white">
-      <p className="text-purple-300">Message for the Secret Room:</p>
-      <textarea
-        value={question}
-        onChange={handleQuestion}
-        className="bg-white text-black rounded px-2 py-1 "
-        placeholder="Type your message here..."
-      />
-      <p className="text-yellow-300">
-        {question ? question : "Waiting for a message..."}
-      </p>
-      <p className="text-green-300">
-        Reply from the Secret Room:
-        <span className="text-yellow-300">
-          {/* {question or waiting for message} */}{" "}
-        </span>
-      </p>
-      <p className="text-yellow-300">
-        {answer ? answer : "Waiting for a reply..."}
-      </p>
-      <Castle />
-      {/* <SimpleAsyncAwait /> */}
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <Navbar currentPage={currentPage} onNavigate={setCurrentPage} />
+
+      <main className="mx-auto flex min-h-[calc(100vh-88px)] w-full max-w-6xl items-center justify-center px-6 py-12">
+        {/* แสดงหน้าเว็บที่เลือกจาก navbar */}
+        <CurrentPageComponent />
+      </main>
     </div>
   );
 }
