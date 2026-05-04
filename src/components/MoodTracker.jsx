@@ -6,7 +6,7 @@ export default function MoodTracker() {
   const moods = ["😊", "😐", "😢", "😡"];
 
   return (
-    <div className="w-full mx-auto rounded-3xl border border-slate-700 bg-slate-900 p-8 text-white">
+    <div className="w-full mx-auto rounded-3xl border border-slate-800 bg-slate-900/80 p-8 text-white">
       <h1 className="mb-6 text-center text-3xl font-bold">Mood Tracker</h1>
 
       <p className="mb-6 text-center text-slate-400">

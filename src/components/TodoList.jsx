@@ -35,7 +35,7 @@ export default function TodoList() {
   };
 
   return (
-    <div className="w-full mx-auto rounded-3xl border border-slate-700 bg-slate-900 p-8 text-white">
+    <div className="w-full mx-auto rounded-3xl border border-slate-800 bg-slate-900/80 p-8 text-white">
       <h1 className="mb-6 text-center text-3xl font-bold">Todo List</h1>
 
       <div className="flex gap-3">

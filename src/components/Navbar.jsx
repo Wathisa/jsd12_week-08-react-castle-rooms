@@ -4,6 +4,7 @@ const navItems = [
   "Todo List",
   "Light Switch",
   "Message Box",
+  "Counter",
   "Castle Rooms",
 ];
 
