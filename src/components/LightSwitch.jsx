@@ -5,7 +5,7 @@ export default function LightSwitch() {
 
   return (
     <section
-      className={`w-full max-w-xs rounded-3xl border px-8 py-12 text-center shadow-2xl transition ${
+      className={`w-full rounded-3xl border px-8 py-12 text-center shadow-2xl transition ${
         isLightOn
           ? "border-amber-200 bg-amber-100 text-slate-950"
           : "border-slate-800 bg-slate-900/80 text-slate-100"

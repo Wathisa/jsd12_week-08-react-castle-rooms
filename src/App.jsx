@@ -26,7 +26,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <Navbar currentPage={currentPage} onNavigate={setCurrentPage} />
 
-      <main className="mx-auto flex min-h-[calc(100vh-88px)] w-full max-w-6xl items-center justify-center px-6 py-12">
+      <main className="mx-auto flex min-h-[calc(100vh-88px)] w-full max-w-6xl justify-center pt-10 px-6 py-12">
         {/* แสดงหน้าเว็บที่เลือกจาก navbar */}
         <CurrentPageComponent />
       </main>

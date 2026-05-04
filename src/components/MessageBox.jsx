@@ -22,10 +22,13 @@ export default function MessageBox() {
   }
 
   return (
-    <section className="w-full max-w-xl rounded-3xl border border-slate-800 bg-slate-900/80 px-8 py-12 text-center shadow-2xl">
+    <section className="w-full rounded-3xl border border-slate-800 bg-slate-900/80 px-8 py-12 text-center shadow-2xl">
       <h2 className="text-3xl font-bold text-white">Message Box</h2>
 
-      <form onSubmit={handleSubmit} className="mx-auto mt-8 flex max-w-sm flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="mx-auto mt-8 flex max-w-sm flex-col gap-4"
+      >
         <input
           type="text"
           value={message}
