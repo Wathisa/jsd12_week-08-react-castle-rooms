@@ -1,99 +1,37 @@
-import { useEffect, useState } from "react";
-import Castle from "./components/01_Castle";
-// import SimpleAsyncAwait from "./examples/async/SimpleAsyncAwait";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import MoodTracker from "./components/MoodTracker";
+import TodoList from "./components/TodoList";
+import LightSwitch from "./components/LightSwitch";
+import MessageBox from "./components/MessageBox";
+import CastleRooms from "./components/CastleRooms";
+import Counter from "./components/Counter";
+
+const pageComponents = {
+  Home,
+  "Mood Tracker": MoodTracker,
+  "Todo List": TodoList,
+  "Light Switch": LightSwitch,
+  "Message Box": MessageBox,
+  Counter: Counter,
+  "Castle Rooms": CastleRooms,
+};
 
 export default function App() {
-  const [view, setView] = useState("outside");
-  const [message, setMessage] = useState("");
-  const [emotion, setEmotion] = useState("");
-  const [step, setStep] = useState("idle");
+  // currentPage ควบคุมว่าจะให้หน้าไหนแสดงบนจอ
+  const [currentPage, setCurrentPage] = useState("Home");
 
-  useEffect(() => {
-    const text = message.trim().toLowerCase();
-
-    if (!text) {
-      setEmotion("");
-      setStep("idle");
-      return;
-    }
-
-    if (text.includes("เหนื่อย") || text.includes("tired")) {
-      setEmotion("tired");
-      setStep("support");
-      return;
-    }
-
-    if (text.includes("เศร้า") || text.includes("sad")) {
-      setEmotion("sad");
-      setStep("support");
-      return;
-    }
-
-    if (text.includes("เครียด") || text.includes("stress")) {
-      setEmotion("stress");
-      setStep("support");
-      return;
-    }
-
-    if (text.includes("ดีใจ") || text.includes("happy")) {
-      setEmotion("happy");
-      setStep("support");
-      return;
-    }
-
-    setEmotion("");
-    setStep("idle");
-  }, [message]);
-
-  const openDoor = () => {
-    setView("inside");
-  };
-
-  const handleMessage = (event) => {
-    setMessage(event.target.value);
-  };
-
-  const handleBetter = () => {
-    setStep("better");
-  };
-
-  const handleReset = () => {
-    setView("outside");
-    setMessage("");
-    setEmotion("");
-    setStep("idle");
-  };
+  const CurrentPageComponent = pageComponents[currentPage];
 
   return (
-    <div
-      className={`flex min-h-screen items-center justify-center px-6 py-10 text-white ${
-        step === "better" ? "bg-slate-600" : "bg-gray-800"
-      }`}
-    >
-      {view === "outside" ? (
-        <div className="flex max-w-md flex-col items-center gap-6 text-center">
-          <p className="text-2xl text-purple-200">
-            Hey... you can come inside and talk with me.
-          </p>
-          <button
-            type="button"
-            onClick={openDoor}
-            className="rounded bg-yellow-300 px-5 py-3 text-black"
-          >
-            Open the Door
-          </button>
-        </div>
-      ) : (
-        <Castle
-          message={message}
-          emotion={emotion}
-          step={step}
-          handleMessage={handleMessage}
-          handleBetter={handleBetter}
-          handleReset={handleReset}
-        />
-      )}
-      {/* <SimpleAsyncAwait /> */}
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <Navbar currentPage={currentPage} onNavigate={setCurrentPage} />
+
+      <main className="mx-auto flex min-h-[calc(100vh-88px)] w-full max-w-6xl justify-center px-6 pt-12 pb-12">
+        {/* แสดงหน้าเว็บที่เลือกจาก navbar */}
+        <CurrentPageComponent />
+      </main>
     </div>
   );
 }
